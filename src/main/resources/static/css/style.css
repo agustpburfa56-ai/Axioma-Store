@@ -1,0 +1,505 @@
+:root{
+    --blanco:#ffffff;
+    --grisclaro: #f4f4f4;
+    --grismedio:#f0f2f5;
+    --gris:#757575;
+    --oscuro:#212121;
+    --primario:#2c3e50; 
+    --secundario:#0097A7;
+    --azuloscuro: #006064 ;  /*#2962ff*/
+    
+
+ }
+
+ /**GLOBALES**/
+ html{
+    font-size: 62.5%;
+    /*BOX MODEL*/
+    box-sizing: border-box;
+    /*scroll-snap-type: y mandatory; scroll de arriba a abajo*/
+}
+/*para el scrooll*/
+    .servicios, 
+    .navegacion-principal,
+    .formulario, 
+    .sobre-mi{
+        scroll-snap-align: center;
+        scroll-snap-stop: always;
+    }
+
+
+*, *:before, *:after {
+  box-sizing: inherit
+ }
+
+
+ body{
+    font-size: 1.6rem;
+    font-family: 'krub', sans-serif;
+    background-color: var(--grismedio); /*fondo de toda la pantalla*/
+    background-image: linear-gradient(to top, var(--grismedio) 0%,var(--blanco) 100%); /*no me convence(degrade de color)*/
+ 
+ }
+   /*SOMBRAS*/
+   .sombra{
+    -webkit-box-shadow: 0px 5px 15px 0px rgba(112,112,112,0.54);
+    -moz-box-shadow: 0px 5px 15px 0px rgba(112,112,112,0.54);
+    box-shadow: 0px 5px 15px 0px rgba(112,112,112,0.54);
+    background-color: var(--blanco);
+    padding: 2rem;
+    border-radius: 1rem;
+
+   }
+
+  /*TIPOGRAFIAS*/
+    h1{
+        font-size: 3.8rem;
+        color:var(--primario); /*cambia a blanco para probar pero va primario*/
+    }
+
+    h2{
+        font-size: 2.rem;
+    }
+
+    h3{
+        font-size: 1.8rem;
+    }
+
+    h1,h2,h3{
+        text-align: center;
+    }
+
+    .titulo span{
+        font-size: 2rem;
+    }
+
+    /**UTILIDADES**/
+    .w-sm-100{
+        width: 100%;
+    }
+    @media (min-width: 768px){
+        .w-sm-100{
+            width: auto;
+    }
+
+    }
+    .flex{
+        display: flex;
+    }
+    .alinear-derecha{
+        justify-content: flex-end;
+    }
+
+    .boton{
+        background-color: var(--secundario); /*color de fondo*/
+        color: var(--blanco);
+        text-decoration: none; /*ELIMINA EL SUBRAYADO DEL TEXTO*/
+        padding: 1rem 2rem;
+        margin-top: 1rem;
+        font-size: 2rem; /*AUMENTO EL TAMAÑO DE LA FUENTE*/
+        text-transform: uppercase; /*Cambia a MAYUSCULAS*/
+        font-weight: bold; /*NEGRITA*/
+        border-radius: .5rem; /*puntas redondeadas*/
+        width: 90%;
+        text-align: center;
+        border: none;
+    }
+
+        @media (min-width: 480px){
+            .boton{
+                width: auto;
+            }
+        }
+
+        .boton:hover{
+            cursor: pointer;
+        }
+    
+    
+    .contenedor {
+        width: 90%;
+        margin: 0 auto;
+        
+
+    }
+
+    /*BARRA DE NAVEGACION*/
+        .nav-bg{
+        background-color: var(--secundario);
+        
+    }
+
+    /*ESTILOS BASE (SE APICAN PRIMERO AL CELULAR)*/
+    .navegacion-principal{
+        padding: 0 2rem;
+        color: var(--grisclaro) ;
+        display: flex;
+        justify-content: center;
+        flex-direction: row;
+        align-items: center; /* Centra los textos */
+        gap: 4rem;
+    } 
+
+    /* --- MEDIA QUERIES (RESPONSIVE PARA TABLET Y PC)--- */
+
+     @media (max-width: 768px) {
+
+    /* 1. Hacemos que el menú se ponga vertical */
+    .navegacion-principal {
+        flex-direction: column; /* Cambia de fila a columna */
+        justify-content: space-evenly;
+        /*padding: 2rem 0;*/
+        gap: 1rem;
+           
+    }
+
+    /*++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
+    }
+    
+    .navegacion-principal a {
+        color: var(--blanco);
+        text-decoration: none;
+        font-size: 2rem;
+        font-weight: 700;
+        padding: 1rem;
+        transition: color 0.3s ease;
+        
+
+    } 
+    .navegacion-principal a:hover{
+        background-color: var(--azuloscuro);
+        color: var(--oscuro);
+    }
+
+    .icono{
+        color: #0097A7;
+    }
+
+    /*IMAGEN DE FONDO*/
+    .hero{
+        background-image: url(../img/programadorbackend1.png);
+        background-repeat: no-repeat;
+        background-size: cover;
+        /*background-position: center;*/
+        height: 450px;
+        /*padding: 20px;*/
+        position: relative; /*EL PADRE SIEMPRE DEBE SER RELATIVE*/
+        margin-bottom: 4rem;
+    }
+
+    .contenido-hero{
+        position: absolute;
+        background-color: rgba(0,0,0,.6); /*Color trasparente para que se vea la foto del fondo*/
+        width: 100%;
+        height: 100%;
+
+        display: flex;
+        flex-direction: column;
+        align-items: center; /*ALINEA horizontal como se cambio a col*/
+        justify-content:center; /*ALINEA VERTICALMENTE (fijarse cual queda mejor)*/
+        text-align: center;
+    }
+
+    .contenido-hero h2,
+    .contenido-hero p{
+        color:var(--blanco);
+    }
+
+    .ubicacion{
+        display: flex;
+        align-items: flex-end;
+    }
+
+    /**SOBRE MI**/
+
+.sobre-mi {
+    text-align: center; /* Centra el texto igual que los títulos */
+    padding: 2rem;      /* Le da espacio interno para que no choque con los bordes */
+    max-width: 80rem;   /* Evita que el texto sea larguísimo (mejora la lectura) */
+    margin: 0 auto;     /* Centra el bloque dentro de la página */
+    margin-bottom: 4rem; /* Separa esta sección de la de "Mis Servicios" */
+}
+
+/* Para que los párrafos se vean más elegantes */
+.sobre-mi p {
+    margin-bottom: 2rem; /* Separa los párrafos entre sí */
+    font-size: 2rem;     /* Ajusta el tamaño si se ve muy chico */
+    line-height: 1.8;    /* Separa un poco las líneas para leer mejor */
+}
+    
+    /*Servicios*/
+    @media (min-width: 768px) {
+    .servicios{
+        display: grid; /*agrega las propiedade de grip asi como flex*/
+        grid-template-columns: repeat(3,1fr) ; /*defino cuantas col y el ancho de una fraccion*/
+        grid-template-rows: auto; /*automatico para que no se aplaste el contenido*/
+        column-gap: 3rem;
+    }
+}
+    /* Estilo de Tarjeta para cada servicio */
+    .servicio{
+        background-color: var(--grismedio); /* Fondo gris muy clarito para diferenciar del blanco */
+        padding: 3rem 2rem;        /* Espacio interno para que el texto no toque los bordes */
+        border-radius: 1.5rem;     /* Bordes redondeados modernos */
+        box-shadow: 0px 4px 15px rgba(0,0,0, 0.05); /* Sombra suave para dar profundidad */
+        transition: transform 0.3s ease; /* Prepara una animación suave */display: flex;             /* Mantiene todo centrado */
+        flex-direction: column;
+        align-items: center;
+        /*display: flex;
+        flex-direction: column;
+        align-items: center;*/
+
+    }
+
+    /* Efecto al pasar el mouse por encima (Hover) */
+    .servicio:hover {
+        transform: translateY(-10px); /* La tarjeta "flota" hacia arriba */
+        box-shadow: 0px 8px 20px rgba(0,0,0, 0.1); /* La sombra crece */
+        background-color: #fff; /* Se vuelve blanca brillante */
+    }
+
+    .servicio h3{
+        color: var(--primario);
+        font-weight: normal;
+    }
+
+    .servicio p{
+        line-height: 2; /*Interlineado del texto*/
+    }
+
+    .servicio .iconosserv{
+        height: 10rem;
+        width: 10rem;
+        background-color: var(--secundario);
+        border-radius: 50%;
+        display: flex;
+        justify-content: space-evenly;
+        align-items: center;
+        margin-bottom: 1rem;
+
+
+    }
+
+    /**Contacto**/
+    .formulario{
+        background-color: var(--gris);
+        width: min(60rem, 100%); /*utilizar el valor mas pequeño*/
+        margin: 0 auto;
+        padding: 2rem;
+        border-radius: 1rem;
+
+
+    }
+    .formulario fieldset{
+        border: none;
+
+    }
+    .formulario legend{
+        color: var(--oscuro);
+        text-align: center;
+        font-size: 1.8rem;
+        text-transform: uppercase;
+        font-weight: 700;
+        margin-bottom: 2rem;
+
+
+    }
+
+    @media (min-width: 768px){
+    .contenedor-campos{
+        display: grid;
+        grid-template-columns: repeat(2,1fr); /*separa en dos columnas de una fraccion*/
+        grid-template-rows: auto auto 20rem; /* filas*/
+        column-gap: 1rem; /*searacion de columnas*/
+    }
+    }
+    .campo:nth-child(3),
+    .campo:nth-child(4){ /*Selecciona el 3 elemento que sea campo*/
+        grid-column: 1/3; /*abarca la fila que esta pero de la col 1 a la col3*/
+
+    }
+
+    .campo{
+        margin-bottom: 2rem;
+    }
+    
+    .campo label{
+        color: var(--blanco);
+        font-weight: bold;
+        margin-bottom: .5rem;
+        display: block;
+
+    }
+
+    .campo textarea{
+        height: 20rem;
+    }
+
+    .input-text{
+        width: 100%;
+        border: none;
+        border-radius: .5rem;
+        padding: 1.5rem;
+
+    }
+
+    /*Pantalla grande formulario*/
+    @media (max-width: 768px) {
+        .formulario{
+            width: 100%;
+        }
+    }
+
+    /**FOOTER**/
+    .footer{
+        text-align: center;
+    }
+
+
+/*Agregado opcional*/
+  /**BOTON DE WHATSAPP**/
+  /* --- Botón Flotante de WhatsApp --- */
+.btn-whatsapp {
+    position: fixed; /* Se queda fijo en la pantalla */
+    bottom: 3rem;    /* Distancia desde abajo */
+    right: 3rem;     /* Distancia desde la derecha */
+    
+    width: 6rem;     /* Tamaño del círculo */
+    height: 6rem;
+    border-radius: 50%; /* Lo hace perfectamente redondo */
+    
+    background-color: #25D366; /* Verde oficial de WhatsApp */
+    color: white;    /* Color del icono */
+    font-size: 3.5rem; /* Tamaño del icono dentro del círculo */
+    
+    /* Centramos el icono perfectamente */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    text-decoration: none; /* Quita el subrayado del enlace */
+    box-shadow: 0px 4px 10px rgba(0,0,0,0.3); /* Una sombrita para que "flote" */
+    z-index: 100; /* Se asegura que esté siempre encima de todo */
+    
+    transition: all 0.3s ease; /* Suaviza el efecto hover */
+}
+
+/* Efecto al pasar el mouse (opcional) */
+.btn-whatsapp:hover {
+    transform: scale(1.1); /* Se agranda un poquito */
+    background-color: #20b858; /* Un verde un poco más oscuro */
+    box-shadow: 0px 6px 15px rgba(0,0,0,0.4);
+}
+
+/* Ajuste para Celulares (para que no tape mucho) */
+@media (max-width: 768px) {
+    .btn-whatsapp {
+        bottom: 2rem;
+        right: 2rem;
+        width: 5rem;  /* Un poco más chico en el celu */
+        height: 5rem;
+        font-size: 2.8rem;
+    }
+}
+
+/*IMAGEN DE FONDO*/
+.hero{
+    /* CAMBIA ESTE NOMBRE por el de tu nueva foto de tienda 👇 */
+    background-image: url(../img/remeras1.jpg);
+    background-position: center; /*centra la imagen*/
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: relative;
+    height: 450px;
+    margin-bottom: 4rem;
+
+    /* Truco Pro: Añadir una capa oscura para que el texto se lea mejor*/
+    box-shadow: inset 0 0 0 1000px rgba(0,0,0,0.2);
+}
+
+/* Asegura que el título principal del header quede centrado */
+.header {
+    text-align: center;
+    padding-top: 2rem; /* Un poco de aire arriba */
+    padding-bottom: 2rem; /* Un poco de aire abajo */
+}
+
+/* EFECTO TIENDA (Diferente a la web Freelancer) */
+
+/* 1. La tarjeta se ilumina al pasar el mouse */
+.servicio {
+    overflow: hidden; /* Importante para que la imagen no se salga al crecer */
+    transition: all 0.3s ease;
+    border: 1px solid transparent;
+}
+
+.servicio:hover {
+    transform: translateY(-5px); /* Se levanta un poco */
+    border-color: var(--secundario); /* Borde turquesa brillante */
+    box-shadow: 0 10px 20px rgba(0, 188, 212, 0.2); /* Resplandor turquesa */
+}
+
+/* 2. La imagen hace ZOOM al pasar el mouse */
+.producto-img {
+    transition: transform 0.5s ease; /* Animación suave */
+}
+
+.servicio:hover .producto-img {
+    transform: scale(1.15); /* Aumenta un 15% de tamaño */
+    filter: drop-shadow(0 10px 10px rgba(0,0,0,0.5)); /* Sombra más fuerte */
+}
+
+/* 3. El botón cambia de estilo */
+.boton {
+    transition: 0.3s;
+}
+.servicio:hover .boton {
+    background-color: var(--secundario);
+    box-shadow: 0 0 10px var(--secundario); /* El botón brilla */
+}
+
+/* --- ESTILO TIPO "ZARA" / TIENDA DE ROPA --- */
+
+/* Hacemos que el banner ocupe 2 columnas en pantallas grandes */
+.banner-modelo {
+    grid-column: span 2; /* Ocupa 2 espacios */
+    background-image: url('../img/modelo.png'); /* TU FOTO DE MODELO */
+    background-size: cover;
+    background-position: center;
+    border-radius: 1.5rem;
+    position: relative;
+    min-height: 300px; /* Altura mínima */
+    display: flex;
+    align-items: flex-end; /* Texto abajo */
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+}
+
+/* El texto sobre la foto del modelo */
+.texto-banner {
+    background: linear-gradient(to top, rgba(0,0,0,0.2), transparent);
+    width: 100%;
+    padding: 2rem;
+    color: white;
+}
+
+.texto-banner h3 {
+    text-align: left; /* Alineado a la izquierda */
+    font-size: 3rem;
+    margin: 0;
+}
+
+.texto-banner p {
+    font-size: 1.6rem;
+    margin: 0;
+    opacity: 0.9;
+}
+
+/* RESPONSIVE: En celular, que vuelva a ser de 1 sola columna */
+@media (max-width: 768px) {
+    .banner-modelo {
+        grid-column: span 1;
+        min-height: 200px;
+    }
+
+}

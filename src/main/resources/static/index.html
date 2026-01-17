@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Axioma Store - Colección Oficial</title>
+
+    <link rel="preload" href="css/normalize.css" as="style">
+    <link rel="stylesheet" href="css/normalize.css">
+    <link href="https://fonts.googleapis.com/css2?family=Krub:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="preload" href="css/style.css" as="style">
+    <link href="css/style.css" rel="stylesheet">
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <style>
+        .producto-img {
+            width: 100%;
+            height: 220px;
+            object-fit: contain; /* Muestra la camiseta entera sin cortarla */
+            margin-bottom: 1rem;
+            filter: drop-shadow(0 5px 5px rgba(0,0,0,0.2)); /* Sombra bonita a la ropa */
+        }
+
+        .precio-tag {
+            background-color: var(--secundario);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 1.8rem;
+            margin: 1rem 0;
+            display: inline-block;
+        }
+
+        /* Ajuste para que el grid use tu clase .servicios correctamente */
+        .grid-productos {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 3rem;
+            margin-top: 2rem;
+        }
+    </style>
+</head>
+<body>
+
+<header id="inicio">
+    <h1 class="titulo">Axioma <span>Store</span></h1>
+</header>
+
+<div class="nav-bg">
+    <nav class="navegacion-principal contenedor">
+        <a href="#">Inicio</a>
+        <a href="#catalogo">Catálogo</a>
+        <a href="admin.html">Panel Admin</a>
+
+        <a href="#" onclick="verCarrito()" class="icono-carrito">
+            🛒 <span id="contador-carrito">0</span>
+        </a>
+    </nav>
+</div>
+
+<section class="hero">
+    <div class="contenido-hero">
+        <h2>Estilo y Tecnología <br> <span style="font-size: 2rem; font-weight: 300;">Colección 2026</span></h2>
+
+        <div>
+            <p>Comodoro Rivadavia, Chubut</p>
+        </div>
+
+        <a class="boton" href="#catalogo">Ver Productos</a>
+    </div>
+</section>
+
+<main class="contenedor sombra" id="catalogo">
+    <h2>Nuestros Productos</h2>
+
+    <div id="contenedor-productos" class="grid-productos">
+        <p style="text-align: center;">Cargando inventario...</p>
+    </div>
+</main>
+
+<footer class="footer">
+    <p>Todos los Derechos Reservados, Axioma EAL Code &copy; 2026</p>
+</footer>
+
+<script>
+    // 1. CARGAR AL INICIAR
+    window.onload = cargarProductos;
+    let carrito = [];
+
+    async function cargarProductos() {
+        try {
+            const respuesta = await fetch('/api/productos');
+            if (!respuesta.ok) throw new Error("Error server");
+            const productos = await respuesta.json();
+
+            const contenedor = document.getElementById('contenedor-productos');
+            contenedor.innerHTML = '';
+
+            // --- TRUCO DE DISEÑO ---
+            // Vamos a recorrer los productos y meter el banner en el medio
+            productos.forEach((prod, indice) => {
+
+                // 1. DIBUJAR TARJETA DE PRODUCTO NORMAL
+                const tarjeta = `
+                        <section class="servicio">
+                            <h3>${prod.nombre}</h3>
+                            <div style="text-align: center;">
+                                <img src="img/${prod.imagen}" alt="${prod.nombre}" class="producto-img">
+                            </div>
+                            <div class="precio-tag">$${prod.precio}</div>
+                            <button class="boton" onclick="agregarAlCarrito('${prod.nombre}', ${prod.precio})" style="width:100%">
+                                Agregar 🛒
+                            </button>
+                        </section>
+                    `;
+                contenedor.innerHTML += tarjeta;
+
+                // 2. SI ES EL SEGUNDO PRODUCTO (Índice 1), INSERTAMOS EL BANNER DEL MODELO
+                if (indice === 1) {
+                    const banner = `
+                            <div class="banner-modelo">
+                                <div class="texto-banner">
+                                    <h3>Axioma <span style="color:var(--secundario)">Lifestyle</span></h3>
+                                    <p>La ropa que codea contigo.</p>
+                                </div>
+                            </div>
+                        `;
+                    contenedor.innerHTML += banner;
+                }
+            });
+
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+    // 2. FUNCIÓN CARRITO
+    function agregarAlCarrito(nombre, precio) {
+        // 1. Lógica existente
+        carrito.push({ nombre: nombre, precio: precio });
+
+        // 2. NUEVO: Actualizar el numerito en el menú
+        document.getElementById('contador-carrito').innerText = carrito.length;
+
+        // 3. Tu alerta existente (déjala igual)
+        let total = carrito.reduce((sum, item) => sum + item.precio, 0);
+        Swal.fire({
+            toast: true, // Hace que la alerta sea pequeña en la esquina
+            position: 'top-end',
+            icon: 'success',
+            title: 'Agregado',
+            text: `${nombre} ($${precio})`,
+            showConfirmButton: false,
+            timer: 1500,
+            background: '#1a1a1a',
+            color: '#fff'
+        });
+    }
+
+    // Función extra para ver qué compraste (Opcional)
+    function verCarrito() {
+        let lista = carrito.map(item => `- ${item.nombre} ($${item.precio})`).join('\n');
+        let total = carrito.reduce((sum, item) => sum + item.precio, 0);
+
+        if(carrito.length === 0) {
+            Swal.fire('Carrito Vacío', '¡Agrega camisetas!', 'info');
+        } else {
+            Swal.fire({
+                title: 'Tu Carrito',
+                html: `<pre style="text-align:left">${lista}</pre><br><strong>Total: $${total}</strong>`,
+                confirmButtonText: 'Pagar Ahora',
+                confirmButtonColor: '#0097A7'
+            });
+        }
+    }
+
+
+</script>
